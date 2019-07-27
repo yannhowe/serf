@@ -1,0 +1,267 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            {% block header_title %}GBM Bulletin -
+                {{ coming_sunday_order_of_service.date }}{% endblock %}
+        </title>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{% static 'newswire/cp/css/bootstrap.min.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <!-- Font-Awesome -->
+        <link rel="stylesheet" href="{% static 'newswire/cp/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'newswire/cp/css/gbm_bulletin_print.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700,700i" rel="stylesheet">
+        {% block header_includes %}{% endblock %}
+        <style>
+            * {
+                font-size: 10px;
+                font-family: 'Raleway', sans-serif;
+            }
+            .h1,
+            .h2,
+            .h3,
+            .h4,
+            .h5,
+            .h6,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: 'Raleway', sans-serif;
+                font-weight: 500;
+                line-height: 1.1;
+                color: inherit;
+            }
+            .h1,
+            h1 {
+                font-size: 26px;
+            }
+            .h2,
+            h2 {
+                font-size: 14px;
+                padding: 3px 0;
+                border-top: 1px solid #aaaaaa;
+                border-bottom: 1px solid #aaaaaa;
+            }
+            .h3,
+            h3 {
+                font-size: 13px;
+            }
+            h3 .posttitle {
+                border-bottom: 1px solid #aaaaaa;
+            }
+            .h4,
+            h4 {
+                font-size: 12px;
+            }
+            .h5,
+            h5 {
+                font-size: 11px;
+            }
+            .h6,
+            h6 {
+                font-size: 10px;
+            }
+            @page {
+                size: A5 portrait;
+                margin: 5pt 15pt;
+            }
+            @page:blank {
+                @top-center {
+                    content: "This page is intentionally left blank.";
+                }
+            }
+            @page:left {}
+            @page:right {}
+            .pagebreak {
+                page-break-before: always;
+            }
+            .logo {
+                max-height: 36px;
+                margin: 0 5px 7px;
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5 {
+                page-break-after: avoid;
+            }
+            figure,
+            table {
+                page-break-inside: avoid;
+            }
+            @page:right {
+                @xbottom-center {
+                    content: "Page " counter(page) " of " counter(pages);
+                }
+            }
+            @page:left {
+                @xbottom-center {
+                    content: "Page " counter(page) " of " counter(pages);
+                }
+            }
+            body {
+                counter-reset: chapternum;
+            }
+            h1.chapter:before {
+                counter-increment: chapternum;
+                content: counter(chapternum) ". ";
+            }
+            body {
+                counter-reset: chapternum figurenum;
+            }
+            h1 {
+                counter-reset: figurenum;
+            }
+            h1.title:before {
+                counter-increment: chapternum;
+                content: counter(chapternum) ". ";
+            }
+            figcaption:before {
+                counter-increment: figurenum;
+                content: counter(chapternum) "-" counter(figurenum) ". ";
+            }
+            @media print {
+                .no-print,
+                .no-print * {
+                    display: none !important;
+                }
+            }
+            .table-condensed > tbody > tr > td,
+            .table-condensed > tbody > tr > th,
+            .table-condensed > tfoot > tr > td,
+            .table-condensed > tfoot > tr > th,
+            .table-condensed > thead > tr > td,
+            .table-condensed > thead > tr > th {
+                font-size: 8px;
+                padding: 1px 4px;
+            }
+            .table {
+                margin: 5px 0 10px;
+            }
+            .raised {
+                position: absolute;
+                left: 10px;
+                top: 9px;
+            }
+            .goal {
+                position: absolute;
+                right: 10px;
+                top: 9px;
+            }
+            .compact-h3 {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            .borderless > tbody > tr > td,
+            .borderless > tbody > tr > th,
+            .borderless > tfoot > tr > td,
+            .borderless > tfoot > tr > th,
+            .borderless > thead > tr > td,
+            .borderless > thead > tr > th {
+                border: none;
+            }
+            @media print {
+                .progress {
+                    background-color: #F5F5F5 !important;
+                    -ms-filter:  "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#F5F5F5', endColorstr='#F5F5F5')" !important;
+                }
+                .progress-bar {
+                    display: block !important;
+                    background-color: #337ab7 !important;
+                    -ms-filter:  "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#5BC0DE', endColorstr='#5BC0DE')" !important;
+                }
+                .progress,
+                .progress > .progress-bar {
+                    display: block !important;
+                    -webkit-print-color-adjust: exact !important;
+                    box-shadow: inset 0 0 !important;
+                    -webkit-box-shadow: inset 0 0 !important;
+                }
+            }
+
+            .no-margin-bottom {
+                margin-bottom: 0;
+            }
+            .our-theme {
+                margin-bottom: 5px;
+            }
+            .col-xs-6 {
+              width: 50%;
+            }
+        </style>
+    </head>
+    <body>
+        <br/><br/><br/><br/>
+        {% include "newswire/cp/includes/bulletin_cover.html" %}
+        <div class="pagebreak"></div>
+        <div class="row">
+            <div class="col-xs-6">
+                {% if coming_sunday_order_of_service %}
+                    {% include "newswire/cp/includes/bulletin_oos.html" %}
+                {% endif %}
+                {% include "newswire/cp/includes/bulletin_theme.html" %}
+            </div>
+            <div class="col-xs-6">
+                {% if events %}
+                    <h2 class="text-center">Upcoming Events</h2>
+                    {% include "newswire/cp/includes/bulletin_events_print.html" %}
+                {% endif %}
+                {% if birthdays %}
+                    <h2 class="text-center">Birthday Greetings</h2>
+                    {% include "newswire/cp/includes/bulletin_birthdays_print.html" %}
+                {% endif %}
+                {% if graph_sunday_attendance or building_fund_received %}
+                    <h2 class="text-center">Weekly Summary</h2>
+                    {% if building_fund_received %}
+                        {% include "newswire/cp/includes/bulletin_building_fund_print.html" %}
+                    {% endif %}
+                    {% if graph_sunday_attendance %}
+                        {% include "newswire/cp/includes/bulletin_attendance_print.html" %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="pagebreak"></div>
+        {% if announcements_print %}
+            <h2 class="text-center">Announcements</h2>
+            {% include "newswire/cp/includes/bulletin_announcements_print.html" %}
+        {% endif %}
+        <div class="pagebreak"></div>
+        {% include "newswire/cp/includes/bulletin_back_cover.html" %}
+
+        <!-- /.row -->
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.1.4 -->
+        <script src="{% static 'newswire/cp/plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+        <!-- jQuery UI 1.11.4 -->
+        <script src="{% static 'newswire/cp/plugins/jQueryUI/jquery-ui.min.js' %}"></script>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+
+        {% block footer_includes %}{% endblock %}
+
+        <script src="{% static 'newswire/cp/js/bootstrap.min.js' %}" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+        <!-- daterangepicker -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>-->
+        <!-- datepicker -->
+        <script src="{% static 'newswire/cp/plugins/datepicker/bootstrap-datepicker.js' %}"></script>
+        <script src="{% static 'newswire/cp/plugins/slimScroll/jquery.slimscroll.min.js' %}"></script>
+        <!-- FastClick -->
+        <script src="{% static 'newswire/cp/plugins/fastclick/fastclick.min.js' %}"></script>
+        <!-- AdminLTE App -->
+        <script src="{% static 'newswire/cp/js/app.min.js' %}"></script>
+    </div>
+</body>
+</html>

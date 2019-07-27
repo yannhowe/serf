@@ -1,0 +1,33 @@
+{% load staticfiles %}
+{% load humanize %}
+<div class="post-preview">
+    <h3>{{ building_fund_collection_latest.date|date:"o" }}
+        building fund progress:</h3>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{building_goal_and_ytd_collection_percent}}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 2%;">
+            {{building_goal_and_ytd_collection_percent|floatformat:"0"|intcomma}}%
+        </div>
+    </div>
+    <p class="small">Giving through
+        {{ building_fund_collection_latest.date|date:"j M, o" }}
+        was
+        <strong>${{building_fund_collection_ytd|default_if_none:'0'|floatformat:"0"|intcomma}}</strong>
+        . We'll need to receive
+        <strong>${{building_goal_and_ytd_collection_difference|default_if_none:'0'|floatformat:"0"|intcomma}}</strong>
+        by the end of the year to meet our building fund goal of
+        <strong>${{building_fund_year_goal|default_if_none:'0'|floatformat:"0"|intcomma}}</strong>
+        this year.
+    </p>
+    <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip({trigger: 'manual'}).tooltip('show');
+        });
+
+        // $( window ).scroll(function() { if($( window ).scrollTop() > 10){  // scroll down abit and get the action
+        $(".progress-bar").each(function() {
+            each_bar_width = $(this).attr('aria-valuenow');
+            $(this).width(each_bar_width + '%');
+        });
+        //  } });
+    </script>
+</div>

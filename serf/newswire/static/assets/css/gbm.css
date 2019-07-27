@@ -1,0 +1,253 @@
+
+#banner > div > div > img {
+  cursor: default;
+  display: inline-block;
+  height: 5em;
+  line-height: 5em;
+  text-align: center;
+  width: 6.20em;
+}
+#header > h1 > a > img {
+  cursor: default;
+  display: inline-block;
+  height: 1.8em;
+  line-height: 1.8em;
+  text-align: center;
+  width: 2.232em;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+@media screen and (max-width: 980px) {
+  #wrapper > header {
+    padding: 11em 3em 7.375em 3em;
+    background-size: auto, cover;
+    background-position: center, 0% 0%;
+    margin-bottom: -4.75em;
+  }
+  #wrapper > header .inner {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 736px) {
+  #wrapper > header {
+    padding: 6.5em 2em 3em 2em;
+    background-size: auto, 125%;
+    margin-bottom: -2.5em;
+  }
+  #wrapper > header h2 {
+    font-size: 1.25em;
+  }
+  #wrapper > header p {
+    font-size: 0.8em;
+  }
+}
+@media screen and (max-width: 980px) {
+  #banner {
+    padding: 12em 2em 12.375em 2em;
+    margin-bottom: -4.75em;
+  }
+  #banner .inner {
+    width: 100%;
+  }
+}
+.text-center {
+  text-align: center;
+}
+header nav {
+  text-decoration: none;
+  -moz-transition: background-color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 5px;
+  padding: 0 1.35em;
+  cursor: pointer;
+  cursor: hand;
+}
+.dropdown-backdrop {
+  position: static;
+}
+@media screen and (max-width: 640px) {
+  #header nav a[href="#menu"] {
+    width: 4em;
+    white-space: nowrap;
+    text-indent: 5em;
+    position: relative;
+  }
+}
+.modal-content {
+  margin-top: 4em;
+  background-color: #ededed;
+}
+.modal-header .close {
+  margin-top: -5px;
+}
+input[type="submit"], input[type="reset"], input[type="button"], button, .button {
+  height: 2.75em;
+  line-height: 3em;
+  padding: 0px 1.75em;
+}
+.close {
+  opacity: 0.8;
+}
+button.close {
+  height: 1.5em;
+  padding: 0 0.75em;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  vertical-align: middle;
+}
+
+/************************ Newswire ****************************/
+
+.btn-xs {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: normal;
+  border-radius: 5px;
+  margin: -5px 0 0 0;
+  padding: 1px 10px;
+}
+.btn-light {
+  color: #cccccc;
+}
+.h1, h1 {
+  margin-bottom: 54px;
+}
+.section-end {
+  margin-bottom: 70px;
+}
+.btn-default, .btn-default {
+  background-color: #D07373;
+  border: 1px solid #D07373;
+  color: white;
+}
+.xbtn-default:hover, xbtn-default:focus {
+  background-color: white;
+  border: 1px solid #0085a1;
+  color: #0085a1;
+}
+.rsvp, .rsvp-going, .rsvp-interested, .rsvp-notgoing {
+  color: #5d5d5d;
+  margin: 0 0 5px 0px;
+}
+.rsvp {
+  background-color: #d7d7d7;
+  border: 1px solid #d7d7d7;
+}
+.rsvp-going {
+  color: white;
+  background-color: #aec7ae;
+  border: 1px solid #4cae4c;
+}
+.rsvp-interested {
+  color: white;
+  background-color: #98b8d5;
+  border: 1px solid #2e6da4;
+}
+.rsvp-notgoing {
+  color: white;
+  background-color: #e8d0d0;
+  border: 1px solid #b98d8d;
+}
+.churchwide {
+  background-color: red;
+  border: 1px solid red;
+  color: white;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  xwidth: 50%;
+}
+
+/*
+    Note: It is best to use a less version of this file ( see http://css2less.cc
+    For the media queries use @screen-sm-min instead of 768px.
+    For .omb_spanOr use @body-bg instead of white.
+*/
+
+@media (min-width: 768px) {
+  .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+    margin-left: 25%;
+  }
+}
+.omb_login .omb_authTitle {
+  text-align: center;
+  line-height: 300%;
+  margin-bottom: 0px;
+}
+.omb_login .omb_authTitle a {
+  text-decoration: underline;
+}
+.omb_login .omb_socialButtons a {
+  color: white; // In yourUse @body-bg
+  opacity: 0.9;
+}
+.omb_login .omb_socialButtons a:hover {
+  color: white;
+  opacity: 1;
+}
+.omb_login .omb_socialButtons .omb_btn-facebook {
+  background: #3b5998;
+}
+.omb_login .omb_socialButtons .omb_btn-twitter {
+  background: #00aced;
+}
+.omb_login .omb_socialButtons .omb_btn-google {
+  background: #c32f10;
+}
+.omb_login .omb_loginOr {
+  position: relative;
+  font-size: 1.5em;
+  color: #aaa;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+.omb_login .omb_loginOr .omb_hrOr {
+  background-color: #cdcdcd;
+  height: 1px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.omb_login .omb_loginOr .omb_spanOr {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: -0.6em;
+  margin-left: -0.6em;
+  background-color: #2e3141;
+  color: #aaa;
+  width: 3em;
+  text-align: center;
+}
+.omb_login .omb_loginForm .input-group.i {
+  width: 2em;
+}
+.omb_login .omb_loginForm .help-block {
+  color: red;
+}
+.omb_login {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  .omb_login .omb_forgotPwd {
+    text-align: right;
+    margin-top: 10px;
+  }
+}
+.btn-group-lg>.btn, .btn-lg {
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 0.3333333;
+  border-radius: 6px;
+}
+*[id^='rsvpbtn-'] {
+  margin-left: 1em;
+}
+table.dataTable tbody tr {
+    background-color: rgba(255, 255, 255, 0.025);
+}

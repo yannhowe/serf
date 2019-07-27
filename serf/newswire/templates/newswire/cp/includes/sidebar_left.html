@@ -1,0 +1,143 @@
+{% load staticfiles %}
+{% url 'attendance_summary' as attendance_summary %}
+
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel hidden">
+        <div class="pull-left image">
+            <img src="{% static 'newswire/cp/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+            <p>
+                {% if request.user.is_authenticated %}
+                    <strong>{{request.user.last_name}}</strong>
+                    {{ request.user.first_name }}{% endif %}
+            </p>
+            <a href="#">
+                <i class="fa fa-circle text-success"></i>
+                Online</a>
+        </div>
+    </div>
+    <!-- search form -->
+    <form action="#" method="get" class="sidebar-form hidden">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+        <li class="header">MAIN NAVIGATION</li>
+        <li class="{% if request.path == " /cp/" %}active{% endif %}">
+            <a href="{% url 'cp_home' %}">
+                <i class="fa fa-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li
+            class="{% if 'orderofservice' in request.path or 'announcement' in request.path or 'event' in request.path or 'weeklyverse' in request.path or 'category' in request.path or 'attendance' in request.path and 'individual-attendance' not in request.path or 'buildingfund' in request.path or 'preview' in request.path  %}active{% endif %} treeview">
+            <a href="#">
+                <i class="fa fa-newspaper-o"></i>
+                <span>Bulletin</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{% if 'orderofservice' in request.path %}active{% endif %}">
+                    <a href="{%  url 'orderofservice_list' %}">
+                        <i class="fa fa-list-ol"></i>
+                        Order of Service</a>
+                </li>
+                <li class="{% if 'announcement' in request.path %}active{% endif %}">
+                    <a href="{%  url 'announcement_list' %}">
+                        <i class="fa fa-thumb-tack"></i>
+                        Announcements</a>
+                </li>
+                <li class="{% if 'weeklyverse' in request.path %}active{% endif %}">
+                    <a href="{%  url 'weeklyverse_list' %}">
+                        <i class="fa fa-list-alt"></i>
+                        Weekly Verse</a>
+                </li>
+                <li class="{% if 'event' in request.path %}active{% endif %}">
+                    <a href="{%  url 'event_list' %}">
+                        <i class="fa fa-calendar"></i>
+                        Event List</a>
+                </li>
+                <li class="{% if 'buildingfund' in request.path %}active{% endif %}">
+                    <a href="{%  url 'buildingfund_list' %}">
+                        <i class="fa fa-list-alt"></i>
+                        Building Fund</a>
+                </li>
+                <li class="{% if 'attendance' in request.path and 'summary' in request.path  %}active{% endif %}">
+                    <a href="{% url 'attendance_summary' %}">
+                        <i class="fa fa-line-chart"></i>
+                        Attendance</a>
+                </li>
+                <li class="{% if 'pdf' in request.path and 'preview' in request.path %}active{% endif %}">
+                    <a href="{%  url 'cp_bulletin_pdf_preview' %}">
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                        PDF Preview</a>
+                </li>
+            </li>
+        </ul>
+    </li>
+    <li class="hidden {% if 'rsvp' in request.path %}active{% endif %} treeview">
+        <a href="#">
+            <i class="fa fa-calendar"></i>
+            <span>RSVPs</span>
+            <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li class="{% if 'rsvp' and not 'raw' in request.path and 'list' in request.path %}active{% endif %}">
+                <a href="{% url 'rsvp_list' %}">
+                    <i class="fa fa-paper-plane"></i>
+                    RSVP Responses</a>
+            </li>
+            <li class="{% if 'rsvp' in request.path and 'list' in request.path and 'raw' in request.path %}active{% endif %}">
+                <a href="{% url 'rsvp_list_raw' %}">
+                    <i class="fa fa-list-alt"></i>
+                    Raw RSVP Data</a>
+            </li>
+        </ul>
+    </li>
+    <li class="{% if 'people' in request.path or 'groups' in request.path or 'individual-attendance' in request.path %}active{% endif %} treeview">
+        <a href="#">
+            <i class="fa fa-user"></i>
+            <span>People</span>
+            <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li class="{% if 'people' and 'summary' in request.path %}active{% endif %}">
+                <a href="{% url 'profile_summary' %}">
+                    <i class="fa fa-bar-chart-o"></i>
+                    Summary</a>
+            </li>
+            <li class="{% if 'people' in request.path and not 'summary'  in request.path %}active{% endif %}">
+                <a href="{% url 'profile_list' %}">
+                    <i class="fa fa-sitemap"></i>
+                    Directory</a>
+            </li>
+            <li class="{% if 'groups' in request.path %}active{% endif %}">
+                <a href="{% url 'group_list' %}">
+                    <i class="fa fa-group"></i>
+                    Groups</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="{% url 'underreview_list' %}">
+            <i class="fa fa-book"></i>
+            <span>Under Review</span>
+            <span class="pull-right-container">
+                <small class="label pull-right {% if total_under_review_count %}bg-red{% else %}bg-green{% endif %}">{{ total_under_review_count|default:"0" }}</small>
+            </span>
+        </a>
+    </li>
+</ul>
+</section>
+<!-- /.sidebar -->

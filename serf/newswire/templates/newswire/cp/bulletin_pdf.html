@@ -1,0 +1,325 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        {% block header_title %}GBM Bulletin - {{ orderofservice.date }}{% endblock %}
+    </title>
+    <style>
+        * {
+            font-size: 10px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 500;
+            line-height: 1.1;
+            color: inherit;
+            text-transform: uppercase;
+            margin-top: 0.75em;
+            margin-bottom: 0.4em;
+        }
+
+        .h1,
+        h1 {
+            font-size: 26px;
+        }
+
+        .h2,
+        h2 {
+            font-size: 14px;
+            padding: 3px 0;
+            border-top: 1px solid #aaaaaa;
+            border-bottom: 1px solid #aaaaaa;
+        }
+
+        .h3,
+        h3 {
+            font-size: 13px;
+        }
+
+        h3 .posttitle {
+            border-bottom: 1px solid #aaaaaa;
+        }
+
+        .h4,
+        h4 {
+            font-size: 12px;
+        }
+
+        .h5,
+        h5 {
+            font-size: 11px;
+        }
+
+        .h6,
+        h6 {
+            font-size: 10px;
+        }
+
+        @page {
+            size: A5 portrait;
+            margin: 5pt 15pt;
+        }
+
+        @page: blank {
+            @top-center {
+                content: "This page is intentionally left blank.";
+            }
+        }
+
+        @page: left {}
+
+        @page: right {}
+
+        .pagebreak {
+            page-break-before: always;
+        }
+
+        .logo {
+            max-height: 36px;
+            margin: 0 5px 7px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            page-break-after: avoid;
+        }
+
+        figure,
+        table {
+            page-break-inside: avoid;
+        }
+
+        @page: right {
+            @xbottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+            }
+        }
+
+        @page: left {
+            @xbottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+            }
+        }
+
+        body {
+            counter-reset: chapternum;
+        }
+
+        h1.chapter:before {
+            counter-increment: chapternum;
+            content: counter(chapternum) ". ";
+        }
+
+        body {
+            counter-reset: chapternum figurenum;
+        }
+
+        h1 {
+            counter-reset: figurenum;
+        }
+
+        h1.title:before {
+            counter-increment: chapternum;
+            content: counter(chapternum) ". ";
+        }
+
+        figcaption:before {
+            counter-increment: figurenum;
+            content: counter(chapternum) "-" counter(figurenum) ". ";
+        }
+
+        @media print {
+            .no-print,
+            .no-print * {
+                display: none !important;
+            }
+        }
+
+        .table-condensed>tbody>tr>td,
+        .table-condensed>tbody>tr>th,
+        .table-condensed>tfoot>tr>td,
+        .table-condensed>tfoot>tr>th,
+        .table-condensed>thead>tr>td,
+        .table-condensed>thead>tr>th {
+            font-size: 8px;
+            padding: 1px 4px;
+        }
+
+        .table {
+            margin: 5px 0 10px;
+        }
+
+        .raised {
+            position: absolute;
+            left: 10px;
+            top: 9px;
+        }
+
+        .goal {
+            position: absolute;
+            right: 10px;
+            top: 9px;
+        }
+
+        .compact-h3 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .borderless>tbody>tr>td,
+        .borderless>tbody>tr>th,
+        .borderless>tfoot>tr>td,
+        .borderless>tfoot>tr>th,
+        .borderless>thead>tr>td,
+        .borderless>thead>tr>th {
+            border: none;
+        }
+
+        @media print {
+            .progress {
+                background-color: #F5F5F5 !important;
+                -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#F5F5F5', endColorstr='#F5F5F5')" !important;
+            }
+            .progress-bar {
+                display: block !important;
+                background-color: #337ab7 !important;
+                -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#5BC0DE', endColorstr='#5BC0DE')" !important;
+            }
+            .progress,
+            .progress>.progress-bar {
+                display: block !important;
+                -webkit-print-color-adjust: exact !important;
+                box-shadow: inset 0 0 !important;
+                -webkit-box-shadow: inset 0 0 !important;
+            }
+        }
+
+        .no-margin-bottom {
+            margin-bottom: 0;
+        }
+
+        .our-theme {
+            margin-bottom: 5px;
+        }
+    </style>
+    {% block header_includes %}{% endblock %}
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-xs-12">
+            <br/><br/><br/>
+            <h1 class="text-center cover-title no-margin-bottom"><img class="logo" src="http://staging.gbm.sg/images/gbm_logo_2016.png"/>Grace Baptist Ministries</h1>
+            <p class="text-center">
+                A CHURCH THAT PREACHES THE GOSPEL TO THE LOST AND GRACE TO THE SAVED.
+            </p>
+            <p class="text-center">
+                <strong>{{ coming_sunday_order_of_service.date }}</strong>
+            </p>
+            <br/> {% if coming_sunday_order_of_service %}
+            <h3 class="text-center">ORDER OF SERVICE</h3>
+            <div class="text-center">
+                <p>
+                    {% if weeklyverse %} {% include "newswire/cp/includes/bulletin_weeklyverse.html" %} {% endif %} {{ coming_sunday_order_of_service.text|linebreaks }}
+                </p>
+            </div>
+
+            {% else %}
+            <div class="text-center">
+                <h2>Order of Service</h2>
+                <h3 class="post-subtitle">
+                            <strong>** date placeholder **</strong>
+                        </h3>
+                <p>
+                    **
+                    <br/>Order of service for this
+                    <br/>Sunday has not been entered yet
+                    <br/>**
+                </p>
+            </div>
+            {% endif %} {% if theme.this_year_theme and theme.this_year_theme_verse %}
+            <div class="col-xs-8 col-xs-offset-2">
+                <div class="text-center">
+                    <h3 class="our-theme">OUR THEME</h3>
+                    <p class="text-justified">
+                        <strong>{{ theme.this_year_theme_year }}:
+                                    {{theme.this_year_theme}}</strong><br/> {{theme.this_year_theme_verse|safe}}
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="pagebreak"></div>
+
+    <div class="row" style="height: 740px; overflow: hidden;">
+        <div class="col-xs-6" style="height: 725px; overflow: hidden;">
+            {% if announcements_print %}
+            <h2 class="text-center">Announcements</h2> {% include "newswire/cp/includes/bulletin_announcements_print.html" %} 
+            {% endif %}
+        </div>
+        <div class="col-xs-6" style="height: 725px; overflow: hidden;">
+            <h2 class="text-center">OUR VISION</h2>
+            <p class="text-center">
+                Glorifying God by building and developing a church of genuine Christians to fulfill the Great Commission.
+            </p>
+            <h2 class="text-center">OUR MISSION</h2>
+            <p class="text-center">
+                <strong>G</strong>lorify God in Worship &bull;
+                <strong>R</strong>ely on the Holy Spirit &bull;
+                <strong>A</strong>dvance the Gospel &bull;
+                <strong>C</strong>are for the Body &bull;
+                <strong>E</strong>quip God’s disciples &bull;
+            </p>
+            {% if birthdays %}
+            <h2 class="text-center">Upcoming Birthdays</h2>
+                {% include "newswire/cp/includes/bulletin_birthdays_print.html" %} 
+            {% endif %}
+            {% if events %}
+                <h2 class="text-center">Upcoming Events</h2> 
+                {% include "newswire/cp/includes/bulletin_events_print.html" %} 
+            {% endif %}
+            {% if graph_sunday_attendance or building_fund_collection_latest %}
+                <h2 class="text-center">Weekly Summary</h2> 
+                {% if building_fund_collection_latest %} 
+                    {% include "newswire/cp/includes/bulletin_building_fund_pdf.html" %} 
+                {% endif %} 
+                {% if graph_sunday_attendance %}
+                    {% include "newswire/cp/includes/bulletin_attendance_pdf.html" %}
+                {% endif %}
+            {% endif%}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="text-center">
+                <strong>Office:</strong> 67452887 | office@gbm.sg | 146B Paya Lebar Road, ACE Building, #05-01, Singapore 409017 <br/>
+                <strong>Pastor Christopher:</strong> 98759808 | pastor.chris@gbm.sg |
+                <strong>Pastor Chung Howe:</strong> pch@gbm.sg
+            </p>
+        </div>
+    </div>
+    {% block footer_includes %}{% endblock %}
+</body>
+
+</html>

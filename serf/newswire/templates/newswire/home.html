@@ -1,0 +1,85 @@
+{% extends 'newswire/__base.html' %}
+{% block title %}Bulletin - {% endblock %}
+{% block content %}
+    <p class="text-justified">
+        <br/>{{config.BULLETIN_WELCOME_MESSAGE}}.
+    </p>
+    <hr/>
+    {% include "newswire/cp/includes/bulletin_theme.html" %}
+    <hr class="section-end"/>
+    {% if coming_sunday_order_of_service %}
+        <h2 class="text-center">Order of Service</h2>
+        {% include "newswire/cp/includes/bulletin_oos.html" %}
+        <hr class="section-end"/>
+    {% endif %}
+    {% if published_announcements %}
+        <h2 class="text-center">Announcements</h2>
+        {% include "newswire/cp/includes/bulletin_announcements.html" %}
+        <br/>
+        <br/>
+    {% endif %}
+    {% if events %}
+        <h2 class="text-center">Upcoming Events</h2>
+        {% include "newswire/cp/includes/bulletin_events.html" %}
+        <br/>
+        <br/>
+    {% endif %}
+    {% if birthdays %}
+        <h2 class="text-center">Birthday Greetings</h2>
+        {% include "newswire/cp/includes/bulletin_birthdays.html" %}
+        <br/>
+        <hr class="section-end"/>
+    {% endif %}
+
+    {% if graph_sunday_attendance or building_fund_collection_latest %}
+        <h2 class="text-center">Weekly Summary</h2>
+        {% if building_fund_collection_latest%}
+            {% include "newswire/cp/includes/bulletin_building_fund.html" %}
+        {% endif %}
+        {% if graph_sunday_attendance %}
+            {% include "newswire/cp/includes/bulletin_attendance.html" %}
+        {% endif %}
+        <br/>
+        <hr class="section-end"/>
+    {% endif %}
+
+    <section class="features">
+        <article>
+            <a href="/about-us/" class="image"><img src="/static/images/footer-about-us.jpg" alt=""/></a>
+            <h3 class="major">About Us</h3>
+            <p>Find out more about our history and the path that has led us here today.</p>
+            <a href="/about-us/" class="special">Learn more</a>
+        </article>
+        <article>
+            <a href="/connect-groups/" class="image"><img src="/static/images/footer-connect-groups.jpg" alt=""/></a>
+            <h3 class="major">Connect Groups</h3>
+            <p>The connect groups are where we meet up to get to know God better in a small and safe group setting. Whether you are a christian or not, everyone is welcome!</p>
+            <a href="/connect-groups/" class="special">Learn more</a>
+        </article>
+        <article>
+            <a href="/ministries/" class="image"><img src="/static/images/footer-ministries.jpg" alt=""/></a>
+            <h3 class="major">Ministries</h3>
+            <p>A listing of the ministries in church to meet any needs you might have or consider how you can get involved.</p>
+            <a href="/ministries/" class="special">Learn more</a>
+        </article>
+        <article>
+            <a href="/our-beliefs/" class="image"><img src="/static/images/footer-our-beliefs.jpg" alt=""/></a>
+            <h3 class="major">Our Beliefs</h3>
+            <p>A very detailed look at our doctrine and philosophy of ministry. You can also contact us to find out more.</p>
+            <a href="/our-beliefs/" class="special">Learn more</a>
+        </article>
+        <article>
+            <a href="/our-staff/" class="image"><img src="/static/images/footer-our-staff.jpg" alt=""/></a>
+            <h3 class="major">Our Staff</h3>
+            <p>Find our more about our staff and the stories behind their journeys to full time.</p>
+            <a href="/our-staff/" class="special">Learn more</a>
+        </article>
+        <article>
+            <a href="/visit-us/" class="image"><img src="/static/images/footer-visit-us.jpg" alt=""/></a>
+            <h3 class="major">Visit Us</h3>
+            <p>Find out when we gather, how to get to our location and what to expect.</p>
+            <a href="/visit-us/" class="special">Learn more</a>
+        </article>
+    </section>
+
+{% endblock %}

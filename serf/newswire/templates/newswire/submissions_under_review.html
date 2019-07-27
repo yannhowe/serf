@@ -1,0 +1,185 @@
+{% extends "account/base.html" %}
+{% load newswire_extras %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+
+{% block title %}Submission Under Review -
+{% endblock %}
+
+{% block hero %}
+    <header>
+        <div class="inner text-center">
+            <h2>Bulletin Item Submission</h2>
+            <p>Review your current and previously reviewed items.</p>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <p>This is a list of all the items you've submitted dated within the last 28 days. Once the item is approved it will appear on the
+        <a href="{% url 'home' %}">bulletin</a>.<br/><br/><strong>Items updated after being approved will require reviewing again.</strong></p>
+    <h2>Announcenments
+        <small>
+            <a href="{% url 'announcement_front_end_new' %}" type="button" class="btn btn-primary btn-xs">
+                <i class="fa fa-plus"></i>
+                Create New</a>
+        </small>
+    </h2>
+    <h3>{{ announcements_under_review.count|default:"" }} Under Review
+        </h3>
+    {% if not announcements_under_review %}
+        <div class="box">
+            <div class="box-header with-border">
+                <p>
+                    <em>No Announcements for Review.
+                        <a href="{% url 'announcement_front_end_new'%}">Submit one</a>
+                    </em>
+                </p>
+            </div>
+        </div>
+    {% else %}
+        {% for announcement in announcements_under_review %}
+            <div class="box">
+                <div class="box-header with-border">
+                    <a class="btn text-danger pull-right" href="{% url 'announcement_front_end_delete' announcement.id %}">
+                        <i class="fa fa-trash"></i>
+                        Delete
+                    </a>
+                    <a class="btn pull-right" href="{% url 'announcement_front_end_update' announcement.id %}">
+                        <i class="fa fa-pencil"></i>
+                        Edit
+                    </a>
+                    <h2>{{ announcement.title }}
+                        <br/>
+                        <small>{% format_date_range announcement.publish_start_date announcement.publish_end_date %}</small>
+                    </h2>
+                    <p>{{ announcement.body }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if not announcements_approved %}
+    {% else %}
+        <h3>Approved</h3>
+        {% for announcement in announcements_approved %}
+            <div class="box">
+                <div class="box-header with-border">
+                    <a class="btn text-danger pull-right" href="{% url 'announcement_front_end_delete' announcement.id %}">
+                        <i class="fa fa-trash"></i>
+                        Delete
+                    </a>
+                    <a class="btn pull-right" href="{% url 'announcement_front_end_update' announcement.id %}">
+                        <i class="fa fa-pencil"></i>
+                        Edit
+                    </a>
+                    <h2>{{ announcement.title }}
+                        <br/>
+                        <small>{% format_date_range announcement.publish_start_date announcement.publish_end_date %}</small>
+                    </h2>
+                    <p>{{ announcement.body }}</p>
+                    <p class="text-right">
+                        <em>Approved by:
+                            {{ announcement.approver|default:"none" }}</em>
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h2>Attendance
+        <small>
+            <a href="{% url 'attendance_front_end_new' %}" type="button" class="btn btn-primary btn-xs">
+                <i class="fa fa-plus"></i>
+                Create New</a>
+        </small>
+    </h2>
+    <h3>{{ sunday_attendance_under_review.count|default:"" }} Under Review</h3>
+    {% if not sunday_attendance_under_review %}
+        <div class="box">
+            <div class="box-header with-border">
+                <p>
+                    <em>No Records for Review.
+                        <a href="{% url 'attendance_front_end_new'%}">Submit one</a>
+                    </em>
+                </p>
+            </div>
+        </div>
+    {% else %}
+        {% for attendance in sunday_attendance_under_review %}
+            <div class="box">
+                <div class="box-header with-border">
+                    <a class="btn text-danger pull-right" href="{% url 'attendance_front_end_delete' attendance.id %}">
+                        <i class="fa fa-trash"></i>
+                        Delete
+                    </a>
+                    <a class="btn pull-right" href="{% url 'attendance_front_end_update' attendance.id %}">
+                        <i class="fa fa-pencil"></i>
+                        Edit
+                    </a>
+
+                    <h2>{{attendance.date|date:"d-m-o (D)"}}</h2>
+                    <p>
+                        <ul>
+                            <li>English Service:
+                                {{attendance.english_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                            <li>Chinese Service:
+                                {{attendance.chinese_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                            <li>Children's Church:
+                                {{attendance.childrens_church|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                            <li>Pre-Schoolers:
+                                {{attendance.preschoolers|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                            <li>Nursery:
+                                {{attendance.nursery|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                        </ul>
+                        <p>Notes:
+                            {{attendance.notes|default_if_none:""}}</p>
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if not sunday_attendance_approved %}
+    {% else %}
+        <h3>Approved</h3>
+        {% for attendance in sunday_attendance_approved %}
+            <div class="box">
+                <div class="box-header with-border">
+                    <a class="btn text-danger pull-right" href="{% url 'attendance_front_end_delete' attendance.id %}">
+                        <i class="fa fa-trash"></i>
+                        Delete
+                    </a>
+                    <a class="btn pull-right" href="{% url 'attendance_front_end_update' attendance.id %}">
+                        <i class="fa fa-pencil"></i>
+                        Edit
+                    </a>
+
+                    <h2>{{attendance.date|date:"d-m-o (D)"}}</h2>
+                    <p>
+                        <ul>
+                            <li>English Service:
+                                {{attendance.english_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                            <li>Chinese Service:
+                                {{attendance.chinese_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                            <li>Children's Church:
+                                {{attendance.childrens_church|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                            <li>Pre-Schoolers:
+                                {{attendance.preschoolers|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                            <li>Nursery:
+                                {{attendance.nursery|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                        </ul>
+                        <p>Notes:
+                            {{attendance.notes|default_if_none:""}}</p>
+                    </p>
+                    <p class="text-right">
+                        <em>Approved by:
+                            {{ attendance.approver|default:"none" }}</em>
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

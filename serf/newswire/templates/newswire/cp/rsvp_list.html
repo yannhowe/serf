@@ -1,0 +1,115 @@
+{% extends 'newswire/cp/__base.html' %}
+{% load newswire_extras %}
+
+{% block header_title %}Event Responses - Grace Baptist Ministries{% endblock %}
+{% block content_header %}Responses{% endblock %}
+{% block content_sub_header %}Grouped by Event{% endblock %}
+
+{% block hero %}
+    <header>
+        <div class="inner text-center">
+            <h2>Event Signups</h2>
+            <p>RSVPs by Event</p>
+        </div>
+    </header>
+{% endblock %}
+
+{% block header_includes %}{% endblock %}
+
+{% block content %}
+    {% regroup signups by event as signup_list_by_event %}
+    {% for event in signup_list_by_event %}
+        <div class="box box-default collapsed-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ event.grouper.title }}</h3>
+                <p>
+                    <strong>{% format_date_range event.grouper.date_start event.grouper.date_end %}
+                        &bull;
+                        {{ event.list|length }}
+                        Response{%if event.list|length < 1 %}s{%endif%}
+                            &bull; (
+
+                            {% regroup event.list by get_rsvp_display as event_list_by_rsvp %}
+                            {% for rsvp in event_list_by_rsvp %}
+                            <span>{{ rsvp.list|length }} {{ rsvp.grouper }}{% if not forloop.last %}, {% endif %}</span>
+                            {% endfor %}
+
+                            )</strong>
+
+                    </p>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                {% regroup event.list by get_rsvp_display as event_list_by_rsvp %}
+                <div class="box-body">
+                    {% for rsvp in event_list_by_rsvp %}
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th class="text-center">{{ rsvp.grouper }}
+                                        ({{ rsvp.list|length }})</th>
+                                </tr>
+                                {% for item in rsvp.list %}
+                                    <tr>
+                                        <td>
+                                            {{ item.user }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <br/>
+                        <br/>
+                        <br/>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endblock %}
+
+    {% block footer_includes %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+        <script>
+            var ctx = document.getElementById("myChart");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        "Red",
+                        "Blue",
+                        "Yellow",
+                        "Green",
+                        "Purple",
+                        "Orange"
+                    ],
+                    datasets: [
+                        {
+                            label: '# of Votes',
+                            data: [
+                                12,
+                                19,
+                                3,
+                                5,
+                                2,
+                                3
+                            ]
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+        </script>
+    {% endblock %}

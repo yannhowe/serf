@@ -1,0 +1,145 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <title>
+            {% block title %}{% endblock %}Grace Baptist Ministries</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="{% static "newswire/js/gbm.js" %}"></script>
+        {% block header_includes %}{% endblock %}
+        
+        <link rel="stylesheet" href="/static/assets/css/main.css"/>
+        <link rel="stylesheet" href="/static/assets/css/gbm.css"/>
+        <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                },
+                i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-84673489-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+
+        <div id="page-wrapper">
+
+            <header id="header">
+                <h1>
+                    <a href="/"><img src="/static/images/gbm_logo_2016.png" alt=""/>
+                        Grace Baptist Ministries</a>
+                </h1>
+                <nav>
+                    <a href="#menu">Menu</a>
+                </nav>
+            </header>
+
+            <nav id="menu">
+                <div class="inner">
+                    <h2>Menu</h2>
+                    <ul class="links">
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/bulletin/">Bulletin</a>
+                        </li>
+                        <li>
+                            <a class="sidebar-nav-item" href="/about-us/">About Us</a>
+                        </li>
+                        <li>
+                            <a class="sidebar-nav-item" href="/visit-us/">Visit Us</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a href="{% url 'profile_front_end_detail' %}">My Profile</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'account_logout' %}">Sign Out</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <a href="#" class="close">Close</a>
+                </div>
+            </nav>
+
+            <section id="wrapper">
+                {% block hero %}
+                    <header>
+                        <div class="inner text-center">
+                            <h2>The Bulletin</h2>
+                            <p>
+                                {{ now|date:"l, j F o" }}
+                            </div>
+                        </header>
+                    {% endblock %}
+                    <div class="wrapper">
+                        <div class="inner">
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+
+                </section>
+
+                <section id="footer">
+                    <div class="inner">
+                        <h2 class="major">Get in touch</h2>
+                        <p>If you’re having trouble finding us or need some suggestions on what to attend, do contact us in or call our office at
+                            <a href={{ config.CONTACT_PHONE_URL }}>{{ config.CONTACT_PHONE }}</a>. For urgent matters, you may also contact Pastor Christopher Chern at <a href=tel:+6598759808>+65 9875 9808</a>.</p>
+                        <ul class="contact">
+                            <li class="fa-phone">
+                                <a href={{ config.CONTACT_PHONE_URL }}>{{ config.CONTACT_PHONE }}</a>
+                            </li>
+                            <li class="fa-envelope">
+                                <a href="{{ config.CONTACT_EMAIL_URL }}">{{ config.CONTACT_EMAIL }}</a>
+                            </li>
+                            <li class="fa-home">
+                                <a href="{{ config.CONTACT_ADDRESS_URL }}">
+                                    {{ config.CONTACT_ADDRESS|safe }}
+                                </li>
+                            </ul>
+                            <ul class="contact">
+                                <li class="fa-twitter">
+                                    <a href="https://twitter.com/gracebaptistmin">twitter.com/gracebaptistmin</a>
+                                </li>
+                                <li class="fa-facebook">
+                                    <a href="https://www.facebook.com/gbmsg">facebook.com/gbmsg</a>
+                                </li>
+                                <li class="fa-instagram">
+                                    <a href="https://www.instagram.com/gbmyouth/">instagram.com/gbmyouth/</a>
+                                </li>
+                            </ul>
+                            <ul class="copyright">
+                                <li>&copy; Grace Baptist Ministries.</li>
+                                <li>Design:
+                                    <a href="http://html5up.net">HTML5 UP</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                </div>
+
+                <script src="/static/assets/js/skel.min.js"></script>
+                <script src="/static/assets/js/jquery.scrollex.min.js"></script>
+                <script src="/static/assets/js/util.js"></script>
+                <script src="/static/assets/js/main.js"></script>
+
+                {% block footer_includes %}{% endblock %}
+
+            </body>
+        </html>

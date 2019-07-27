@@ -1,0 +1,47 @@
+{% extends "account/base.html" %}
+{% load newswire_extras %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block title %}Upcoming Event List -
+{% endblock %}
+
+{% block hero %}
+    <header>
+        <div class="inner text-center">
+            <h2>Upcoming Event List</h2>
+            <p>A list of all upcoming events</p>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div id="event-details" class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+            {% regroup events_in_future_all by date_start|date:"F Y" as events_in_future_all_by_month %}
+            {% for eventgroup in events_in_future_all_by_month %}
+                <br/>
+                <h2 class="text-center">{{ eventgroup.grouper }}</h2>
+                <table class="table">
+                    <colgroup>
+                        <col class="col-xs-4">
+                        <col class="col-xs-8">
+                    </colgroup>
+                    <tbody>
+                        {% for event in eventgroup.list %}
+                            <tr>
+                                <td class="text-right">{{event.date_start|date:"d"}}
+                                    {% if event.date_end %}
+                                        -
+                                        {{event.date_end|date:"d"}}{% endif %}
+                                </td>
+                                <td>{{event.title}}</td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

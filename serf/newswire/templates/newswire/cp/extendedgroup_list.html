@@ -1,0 +1,90 @@
+{% extends "newswire/cp/__base.html" %}
+{% block header_title %}{{page.title}}
+    - Grace Baptist Ministries{% endblock %}
+{% block content_header %}{{page.header}}{% endblock %}
+{% block content_sub_header %}{{page.description}}
+    <a style="margin-top: -0.8em;" href="new" type="button" class="btn btn-xs btn-primary">
+        <i class="fa fa-plus"></i>
+        Create New</a>
+{% endblock %}
+
+{% block header_includes %}{% endblock %}
+
+{% block content %}
+    <div class="box box-default collapsed-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">How this works</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body" style="display: none;"></div>
+    </div>
+    {% for group in object_list %}
+        <div class="box box-default {% if not group.member.all %}collapsed-box{% endif %}">
+            <div class="box-header with-border">
+                <h3 class="box-title {% if not group.member.all %}text-muted{% endif %}">
+                    <strong>{{ group }}&nbsp</strong>
+                    <div style="margin: -0.1em 0.2em 0 -0.2em;" class="btn-toolbar pull-right">
+
+                        {% if not group.member.all %}
+                            <button type="button" class="btn btn-xs pull-right">
+                                Empty</button>
+                        {% endif %}
+                    </div>
+                </h3>
+                <!-- Buttons, labels, and many other things can be placed here! -->
+                <!-- Here is a label for example -->
+                <div class="box-tools pull-right">
+                    <a href="{% url 'group_edit' group.id %}">
+                        <i class="fa fa-pencil"></i>
+                        Edit
+                    </a>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa {% if not group.member.all %}fa-plus{% else %}fa-minus{% endif %}"></i>
+                    </button>
+                </div>
+                <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body {% if not group.member.all %}text-muted{% endif %}">
+                <p><strong>Leader(s)</strong>
+                    <ul>
+                        {% for leader in group.leader.all %}
+                            <li>{{leader}}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+                <p><strong>Member(s)</strong>
+                    <ul>
+                        {% for member in group.member.all %}
+                            <li>{{member}}</li>
+                        {% endfor %}
+                    </ul>
+                    </p>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div class="pull-left">
+                    <a class="btn text-default pull-right" href="#">
+                        <i class="fa fa-plus"></i>
+                        Add Attendance
+                    </a>
+                </div>
+                <div class="pull-right">
+                    <a class="btn text-danger pull-right" href="{% url 'group_delete' group.id %}">
+                        <i class="fa fa-trash"></i>
+                        Delete
+                    </a>
+                </div>
+            </div>
+            <!-- box-footer -->
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block footer_includes %}{% endblock %}

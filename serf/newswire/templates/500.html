@@ -1,0 +1,26 @@
+{% extends 'newswire/__base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+
+{% block title %}500 - Server Error{% endblock %}
+
+{% block hero %}
+    <header>
+        <div class="inner text-center">
+            <h2>500 Server Error</h2>
+            <p>Something broke while processing your request.</p>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div>
+      <h2>Need help?</h2>
+        <p class="text-justified">Perhaps you could start again at the
+            <a href="{% url 'home' %}">bulletin</a>
+            or the
+            <a href="/">home page</a>.
+        </p>
+    </div>
+{% endblock %}

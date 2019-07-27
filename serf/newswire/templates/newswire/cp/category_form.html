@@ -1,0 +1,43 @@
+{% extends "newswire/cp/__base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block header_title %}Announcement Audience Category - Grace Baptist Ministries{% endblock %}
+{% block content_header %}Announcement Audience Category{% endblock %}
+{% block content_sub_header %}{% endblock %}
+
+{% block header_includes %}
+  <link rel="stylesheet" href="{% static 'newswire/cp/css/bootstrap-colorpicker.min.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">
+        <strong>Announcement Audience Category</strong>
+      </a>
+    </h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      <span class="label label-primary"></span>
+    </div>
+    <!-- /.box-tools -->
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    {% crispy form %}
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer"></div>
+  <!-- box-footer -->
+</div>
+{% endblock %}
+
+{% block footer_includes %}
+<script src="{% static 'newswire/cp/js/bootstrap-colorpicker.min.js' %}"></script>
+<script>
+  $(document).ready(function() {
+    $('.color-picker-1').colorpicker({});
+  });
+</script>
+{% endblock %}

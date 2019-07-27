@@ -1,0 +1,104 @@
+{% load newswire_extras %}
+
+{% regroup events by date_start|date:"F Y" as events__by_month %}
+{% for eventgroup in events__by_month %}
+
+    <br/>
+    <h2 class="text-center">{{ eventgroup.grouper }}</h2>
+
+    <table class="table table-condensed borderless">
+        <tbody>
+            {% for event in eventgroup.list %}
+                <tr style="padding: 0;">
+                    <td class="text-right col-xs-7">
+                        <strong>
+                            {% if event.description %}
+                                <a tabindex="0" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="{{ event.title }}" data-content="{{event.description}}">
+                                {% endif %}{{ event.title }}
+                                {% if event.description %}
+                                </a>
+                            {% endif %}
+                        </strong>
+                    </td>
+                    <td class="text-left col-xs-5">
+                        <div class="no-print modal fade" id="rsvpModal-{{event.pk}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class=" modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h2 class="modal-title" id="event-title-{{event.pk}}">{{ event.title }}</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            <strong>Date:</strong>
+                                            {% format_date_range event.date_start event.date_end %}
+                                        </p>
+                                        <p>
+                                            {{ event.description }}
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        {% if request.user.is_authenticated %}
+                                            {% if event.track_rsvp %}
+                                                <form action="rsvp/update/" method="POST" id="rsvp-form">
+                                                    {% csrf_token %}
+                                                    <div class="fieldWrapper"></div>
+                                                    <button id="btn-notgoing-{{event.pk}}" type="submit" value="notgoing-{{event.pk}}" form="rsvp-form" class="rsvp-response btn btn-xs rsvp rsvp-notgoing pull-left">Not Going</button>
+                                                    <button id="btn-interested-{{event.pk}}" type="submit" value="interested-{{event.pk}}" form="rsvp-form" class="rsvp-response btn btn-xs rsvp rsvp-interested pull-left">Interested</button>
+                                                    <button id="btn-going-{{event.pk}}" type="submit" value="going-{{event.pk}}" form="rsvp-form" class="rsvp-response btn btn-xs rsvp rsvp-going pull-left">Going</button>
+                                                </form>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if event.track_rsvp %}
+                                                <a href="/accounts/login/" class="btn btn-xs pull-left">Login to RSVP</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <i>{% format_date_range event.date_start event.date_end %}
+                            {% if request.user.is_authenticated %}
+                                {% if event.track_rsvp %}
+                                    {% for signup in signups %}
+                                        {% if signup.user.pk == request.user.pk and signup.event.pk == event.pk %}
+                                            <a type="button" id="rsvpbtn-{{event.pk}}" class="no-print btn btn-xs btn-default rsvp-{{ signup.rsvp|lower }}" data-toggle="modal" data-target="#rsvpModal-{{event.pk}}">
+                                                {{ signup.rsvp }}
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if event.id not in signup_id_list %}
+                                        <a id="rsvpbtn-{{event.pk}}" class="no-print btn btn-xs btn-default" data-toggle="modal" data-target="#rsvpModal-{{event.pk}}">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                            RSVP
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            {% else %}
+                                {% if event.track_rsvp %}
+                                    <a href="/accounts/login/" class="no-print btn btn-xs btn-default">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                        Log in to RSVP
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        </i>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfor %}
+
+<p class="text-center">
+    <a href="{% url 'events_front_end' %}">See all upcoming events</a>
+</p>
+
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover()
+    });
+</script>

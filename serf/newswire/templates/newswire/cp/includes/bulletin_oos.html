@@ -1,0 +1,11 @@
+<div class="text-center">
+    <h3 class="post-subtitle">
+        <strong>{{ coming_sunday_order_of_service.date }}</strong>
+    </h3>
+    <p>
+        {% if weeklyverse %}
+            {% include "newswire/cp/includes/bulletin_weeklyverse.html" %}
+        {% endif %}
+        {{ coming_sunday_order_of_service.text|linebreaks }}
+    </p>
+</div>

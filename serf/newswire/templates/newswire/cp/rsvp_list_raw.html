@@ -1,0 +1,43 @@
+{% extends 'newswire/cp/__base.html' %}
+{% load newswire_extras %}
+
+
+{% block header_title %}Event Signup Data - Grace Baptist Ministries{% endblock %}
+{% block content_header %}Event Signup Data{% endblock %}
+{% block content_sub_header %}Raw RSVP data{% endblock %}
+
+
+{% block header_includes %}
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block content %}
+  <table id="rawrsvp">
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>Full Name</th>
+        <th>RSVP</th>
+      </tr>
+    </thead>
+    {% for rsvp in signups %}
+      <tr>
+        <td>{{ rsvp.event.title }}
+          {% format_date_range rsvp.event.date_start rsvp.event.date_end %}</td>
+        <td>
+          <strong>{{ rsvp.user.last_name }}</strong>
+          {{ rsvp.user.first_name }}</td>
+        <td>{{ rsvp.get_rsvp_display }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
+
+{% block footer_includes %}
+  <script>
+    $(document).ready(function() {
+      $('#rawrsvp').DataTable({"paging": false});
+    });
+  </script>
+  <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+{% endblock %}

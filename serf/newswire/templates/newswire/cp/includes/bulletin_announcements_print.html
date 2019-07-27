@@ -1,0 +1,29 @@
+{% for announcement in announcements_print %}
+    <div class="post-preview {{ announcement.category.name }}-hide">
+        <p class="post-meta pull-right">
+            <button type="button" class="btn btn-default btn-xs btn-light" style="background-color: {{ announcement.category.color }}; border: 1px solid  {{ announcement.category.color }};">
+                <small>{{ announcement.category }}</small>
+            </button>
+        </p>
+        <h3 class="post-title">
+            <strong>{{ announcement.title }}</strong>
+        </h3>
+        <p class="text-justify post-subtitle">
+            {{ announcement.body }}
+            {% if announcement.link %}
+                <a href="{{ announcement.link }}">
+                    <i class="no-print fa fa-link"></i>
+                </a>
+            {% endif %}
+        </p>
+    </div>
+{% endfor %}
+{% if more_annoucements_online_count > 0 %}
+    <p class="text-center">See
+        <strong>{{more_annoucements_online_count}}</strong>
+        more
+        {{more_annoucements_online_count|pluralize}}
+        at
+        <strong>http://gbm.sg/bulletin/</strong>
+    </p>
+{% endif %}

@@ -1,0 +1,112 @@
+{% extends "newswire/cp/__base.html" %} {% block header_title %}Order Of Service - Grace Baptist Ministries{% endblock %} {% block content_header %}Order Of Service{% endblock %} {% block content_sub_header %}
+<a style="margin-top: -0.8em;" href="{% url 'orderofservice_new' %}" type="button" class="btn btn-xs btn-primary">
+    <i class="fa fa-plus"></i> Create New</a>
+{% endblock %} {% block header_includes %}{% endblock %} {% block content %}
+<div class="box box-default collapsed-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">How this works</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-plus"></i>
+                </button>
+        </div>
+        <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body" style="display: none;">
+        The
+        <a href="{% url 'home' %}">
+                bulletin page</a> selects the order-of-service that has dates greater or equal to today and displays the next upcoming order-of-service by date. If there are 2 records with the same date, the one created first will be displayed.
+    </div>
+    <!-- /.box-body -->
+</div>
+{% for orderofservice in page_obj %}
+<div class="box
+      {% if not orderofservice.id == live_orderofservice.id %}collapsed-box{% endif %}">
+    <div class="box-header with-border">
+        {% if orderofservice.id == live_orderofservice.id %}
+        <div style="margin: -0.1em 0.2em 0 -0.2em;" class="btn-toolbar pull-left">
+            <button type="button" class="btn btn-xs btn-success pull-left">
+                            Live</button>
+        </div>
+        {% elif orderofservice.is_upcoming %}
+        <div style="margin: -0.1em 0.2em 0 -0.2em;" class="btn-toolbar pull-left">
+            <button type="button" class="btn btn-xs pull-left">
+                            Future</button>
+        </div>
+        {% endif %} {% if orderofservice.is_print %}
+        <div style="margin: -0.1em 0.2em 0 -0.2em;" class="btn-toolbar pull-left">
+            <button type="button" class="btn btn-xs btn-success pull-left">
+                            Print</button>
+        </div>
+        {% endif %}
+        <h3 class="box-title">
+                    <strong>{{ orderofservice.get_service_name_display }}
+                        -
+                        {{ orderofservice.date }}</strong>
+                </h3>
+        <!-- Buttons, labels, and many other things can be placed here! -->
+        <!-- Here is a label for example -->
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa {% if not orderofservice.id == live_orderofservice.id %}fa-plus{% else %}fa-minus{% endif %}"></i>
+                    </button>
+        </div>
+        <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+
+    {% if orderofservice.num_of_lines > highlight.oos_tip_lines %}
+    <div class="callout {% if orderofservice.num_of_lines > highlight.oos_warning_lines %}callout-warning{% else %}callout-info{% endif %}">
+        <h4>
+                        {% if orderofservice.num_of_lines > highlight.oos_warning_lines %}Warning!{% else %}Tip{% endif %}
+                    </h4>
+        <p>
+            This order of service has {{ orderofservice.num_of_lines }} lines, {% if orderofservice.num_of_lines > highlight.oos_warning_lines %} more than {% else %} very close to {% endif %} the recommended {{ highlight.oos_warning_lines }} lines. It may not fit
+            in the <a href="{% url 'bulletin_pdf' %}">pdf bulletin</a>. {% if orderofservice.is_print %}You can also check the print preview
+            <a href="{% url 'cp_bulletin_print' %}">here</a> but it does not show page breaks. {% endif %}
+        </p>
+    </div>
+    {% endif %}
+
+    <div class="box-body">
+        {{ orderofservice.text|linebreaks }}
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <div class="btn text-default pull-left">
+            <a href="{% url 'orderofservice_edit' orderofservice.id %}">
+                <i class="fa fa-pencil"></i> Edit
+            </a>
+        </div>
+
+        <div class="pull-right">
+            <a class="btn text-danger" href="{% url 'orderofservice_delete' orderofservice.id %}">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+    <!-- box-footer -->
+    </div>
+    {% endfor %} {% if is_paginated %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+                {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                </li>
+                {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %} {% endfor %} {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    {% endif %} {% endblock %} {% block footer_includes %}{% endblock %}

@@ -1,0 +1,5 @@
+server {
+    listen 80;
+    server_name  www.gbm.sg;
+    return 301 $scheme://gbm.sg$request_uri;
+}

@@ -1,0 +1,35 @@
+{% load staticfiles %}
+{% load humanize %}
+<div class="post-preview">
+    <h3>Attendance:</h3>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.4.1/morris.min.js"></script>
+    <p>
+        <div id="attendance-chart"></div>
+        <script>
+            Morris.Area({
+                element: 'attendance-chart',
+                data: [
+                    {% for attendance in graph_sunday_attendance %}
+                        {
+                            y: '{{attendance.date|date:"o-m-d"}}',
+                            a: '{{attendance.nursery|default_if_none:"0"|floatformat:"0"|intcomma}}',
+                            b: '{{attendance.preschoolers|default_if_none:"0"|floatformat:"0"|intcomma}}',
+                            c: '{{attendance.childrens_church|default_if_none:"0"|floatformat:"0"|intcomma}}',
+                            d: '{{attendance.chinese_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}',
+                            e: '{{attendance.english_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}'
+                        },{% endfor %}
+                ],
+                xkey: 'y',
+                ykeys: [
+                    'a', 'b', 'c', 'd', 'e'
+                ],
+                xLabels: ["day"],
+                labels: [
+                    'Nursery', 'Preschoolers', 'Children\'s Church', 'Chinese Congregation', 'English Congregation'
+                ],
+                ymin: 'auto 200'
+            });
+        </script>
+    </p>
+</div>

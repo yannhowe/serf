@@ -1,0 +1,18 @@
+{% load newswire_extras %}
+<table class="table table-condensed borderless">
+    <tbody>
+        {% for event in events_print %}
+            <tr style="padding: 0;">
+                <td class="text-right col-xs-8">
+                    <strong>{{ event.title }}</strong>
+                </td>
+                <td class="text-right col-xs-4">
+                    <i>{% format_date_range event.date_start event.date_end %}</i>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p class="text-center">See full event details at
+    <strong>http://gbm.sg/bulletin/</strong>
+</p>

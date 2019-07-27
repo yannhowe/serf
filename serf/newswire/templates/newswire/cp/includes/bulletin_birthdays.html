@@ -1,0 +1,9 @@
+<p class="text-center">
+    {% regroup birthdays by date_of_birth as birthdays_by_date %}
+        {% for date in birthdays_by_date %}
+                <strong>{{ date.grouper|date:"j M" }}</strong><br />
+                    {% for person in date.list %}
+                        {{ person.last_name }} {{ person.first_name }} <br />
+                    {% endfor %}
+        {% endfor %}
+</p>

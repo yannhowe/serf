@@ -1,0 +1,66 @@
+[{
+    "model": "sites.site",
+    "pk": 1,
+    "fields": {
+        "domain": "gbm.sg",
+        "name": "gbm.sg"
+    }
+}, {
+    "model": "newswire.category",
+    "pk": 1,
+    "fields": {
+        "name": "Churchwide",
+        "description": "Churchwide Post",
+        "color": "#bac8d9"
+    }
+}, {
+    "model": "newswire.category",
+    "pk": 2,
+    "fields": {
+        "name": "Youth",
+        "description": "Youth Announcements",
+        "color": "#d6abab"
+    }
+}, {
+    "model": "newswire.category",
+    "pk": 3,
+    "fields": {
+        "name": "Young Adults",
+        "description": "Young Adult Announcements",
+        "color": "#bae0bb"
+    }
+}, {
+    "model": "newswire.category",
+    "pk": 4,
+    "fields": {
+        "name": "Members",
+        "description": "Announcements for Members",
+        "color": "#b2d9bb"
+    }
+}, {
+    "model": "newswire.category",
+    "pk": 5,
+    "fields": {
+        "name": "Events",
+        "description": "Events",
+        "color": "#deccde"
+    }
+}, {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "editor"
+    }
+}, {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+        "name": "contributor"
+    }
+}, {
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+        "name": "bulletin_approver"
+    }
+}]

@@ -1,0 +1,190 @@
+{% extends "newswire/cp/__base.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% block header_title %}Attendance Summary - Grace Baptist Ministries{% endblock %}
+{% block content_header %}Attendance Summary{% endblock %}
+{% block header_includes %}
+    <link rel="stylesheet" href="{% static 'newswire/cp/plugins/datatables/jquery.dataTables.min.css' %}">
+{% endblock %}
+{% block content_sub_header %}
+    <a style="margin-top: -0.8em;" href="{% url 'attendance_new' %}" type="button" class="btn btn-xs btn-primary">
+        <i class="fa fa-plus"></i>
+        Create New</a>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Recent Sunday Attendance</h3>
+                    <div class="box-tools pull-right"></div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    {% for attendance in recent_sunday_attendance %}
+                        <dl>
+                            <dt>
+                                <strong>{{attendance.date|date:"d-m-o (D)"}}
+                                </strong>
+                                <a href="{%  url 'attendance_edit' attendance.id  %}">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </dt>
+                            <dd>
+                                <p>
+                                    <ul>
+                                        <li>English Service:
+                                            {{attendance.english_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                                        <li>Chinese Service:
+                                            {{attendance.chinese_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                                        <li>Children's Church:
+                                            {{attendance.childrens_church|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                                        <li>Pre-Schoolers:
+                                            {{attendance.preschoolers|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                                        <li>Nursery:
+                                            {{attendance.nursery|default_if_none:"0"|floatformat:"0"|intcomma}}</li>
+                                    </ul>
+                                </p>
+                                <p>
+                                    <strong>Submitted by:</strong>
+                                    {{attendance.submitter}}
+                                    <br/>
+                                    <strong>Approved by:</strong>
+                                    {{attendance.approver}}
+                                </p>
+                            </dd>
+                        </dl>
+                    {% endfor %}
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Trend</h3>
+                </div>
+                <div class="box-body">
+                    <script>
+                        $(function() {
+                            $('[data-toggle="tooltip"]').tooltip({trigger: 'manual'}).tooltip('show');
+                        });
+
+                        // $( window ).scroll(function() { if($( window ).scrollTop() > 10){  // scroll down abit and get the action
+                        $(".progress-bar").each(function() {
+                            each_bar_width = $(this).attr('aria-valuenow');
+                            $(this).width(each_bar_width + '%');
+                        });
+                        //  } });
+                    </script>
+                    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+                    <script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
+                    <p>
+                        <div id="attendance-chart"></div>
+                        <script>
+                            Morris.Area({
+                                element: 'attendance-chart',
+                                data: [
+                                    {% for attendance in graph_sunday_attendance %}
+                                        {
+                                            y: '{{attendance.date|date:"o-m-d"}}',
+                                            a: '{{attendance.nursery|default_if_none:"0"|floatformat:"0"|intcomma}}',
+                                            b: '{{attendance.preschoolers|default_if_none:"0"|floatformat:"0"|intcomma}}',
+                                            c: '{{attendance.childrens_church|default_if_none:"0"|floatformat:"0"|intcomma}}',
+                                            d: '{{attendance.chinese_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}',
+                                            e: '{{attendance.english_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}'
+                                        },{% endfor %}
+                                ],
+                                xkey: 'y',
+                                ykeys: [
+                                    'a', 'b', 'c', 'd', 'e'
+                                ],
+                                xLabels: ["day"],
+                                labels: [
+                                    'Nursery', 'Preschoolers', 'Children\'s Church', 'Chinese Congregation', 'English Congregation'
+                                ],
+                                ymin: 'auto 200'
+                            });
+                        </script>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box ">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Raw Data</h3>
+                </div>
+                <div class="box-body">
+                    <table id="memberlist" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>English Congregation</th>
+                                <th>Chinese Congregation</th>
+                                <th>Children's Church</th>
+                                <th>Preschoolers</th>
+                                <th>Nursery</th>
+                                <th>Notes</th>
+                                <th>Submitter</th>
+                                <th>Approver</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attendance in object_list %}
+                                <tr>
+                                    <td>{{ attendance.date|date:"o-m-d" }}
+                                        <a href="{%  url 'attendance_edit' attendance.id  %}">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a href="{%  url 'attendance_delete' attendance.id  %}">
+                                            <i class="text-danger fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                    <td>{{ attendance.english_congregation }}</td>
+                                    <td>{{ attendance.chinese_congregation }}</td>
+                                    <td>{{ attendance.childrens_church }}</td>
+                                    <td>{{ attendance.preschoolers }}</td>
+                                    <td>{{ attendance.nursery }}</td>
+                                    <td>{{ attendance.notes }}</td>
+                                    <td>{{ attendance.submitter }}</td>
+                                    <td>{{ attendance.approver }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Date</th>
+                                <th>English Congregation</th>
+                                <th>Chinese Congregation</th>
+                                <th>Children's Church</th>
+                                <th>Preschoolers</th>
+                                <th>Nursery</th>
+                                <th>Notes</th>
+                                <th>Submitter</th>
+                                <th>Approver</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer_includes %}
+    <script>
+        $(document).ready(function() {
+            $('#memberlist').DataTable({
+                "paging": true,
+                "scrollX": true,
+                "order": [3, 'desc']
+            });
+        });
+    </script>
+    <script src="{% static 'newswire/cp/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+{% endblock %}

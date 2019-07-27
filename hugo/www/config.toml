@@ -1,0 +1,6 @@
+theme = "something"
+baseurl = "http://something.com/"
+languageCode = "en-us"
+title = "Title"
+MetaDataFormat = "toml"
+SectionPagesMenu = "main"

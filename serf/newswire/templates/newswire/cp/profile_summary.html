@@ -1,0 +1,86 @@
+{% extends "newswire/cp/__base.html" %}
+{% block header_title %}People Summary - Grace Baptist Ministries{% endblock %}
+{% block content_header %}People Summary{% endblock %}
+{% block header_includes %}
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+{% endblock %}
+{% block content_sub_header %}Control Panel{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua">
+                    <i class="fa fa-fw fa-user"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Total Profiles</span>
+                    <span class="info-box-number">{{ all_profiles.count }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green">
+                    <i class="fa fa-fw fa-user"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Members</span>
+                    <span class="info-box-number">{{ members.count }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow">
+                    <i class="fa fa-fw fa-user"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Non-Members</span>
+                    <span class="info-box-number">{{ non_members.count }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green">
+                    <i class="fa fa-fw fa-user"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Regular Non-Members</span>
+                    <span class="info-box-number">{{ regular_non_members.count }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <div class="info-box">
+                <span class="info-box-icon bg-red">
+                    <i class="fa fa-fw fa-user"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Non Regular Members</span>
+                    <span class="info-box-number">{{ non_regular_members.count }}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12"></div>
+        <!-- /.col -->
+    </div>
+{% endblock %}
+
+{% block footer_includes %}
+    <script>
+        $(document).ready(function() {
+            $('#memberlist').DataTable({"paging": false});
+        });
+    </script>
+    <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+{% endblock %}

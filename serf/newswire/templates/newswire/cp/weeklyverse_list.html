@@ -1,0 +1,84 @@
+{% extends "newswire/cp/__base.html" %} {% block header_title %}Weekly Verse - Grace Baptist Ministries{% endblock %} {% block content_header %}Weekly Verse{% endblock %} {% block content_sub_header %}
+<a style="margin-top: -0.8em;" href="{% url 'weeklyverse_new' %}" type="button" class="btn btn-xs btn-primary">
+    <i class="fa fa-plus"></i> Create New</a>
+{% endblock %} {% block header_includes %}{% endblock %} {% block content %}
+<div class="box box-default collapsed-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">How this works</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-plus"></i>
+                </button>
+        </div>
+        <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body" style="display: none;">
+        The latest weekly verse is displayed in the order of service.
+    </div>
+    <!-- /.box-body -->
+</div>
+
+{% for weeklyverse in page_obj %}
+<div class="box">
+    <div class="box-header with-border">
+        <div style="margin: -0.1em 0.2em 0 -0.2em;" class="btn-toolbar pull-left">
+            {% if weeklyverse.is_upcoming %}
+            <button type="button" class="btn btn-xs btn-primary pull-left">
+                            Upcoming</button> {% endif %}
+        </div>
+        <h3 class="box-title">
+                    <strong>{{ weeklyverse.date }}</strong>
+                </h3>
+        <!-- Buttons, labels, and many other things can be placed here! -->
+        <!-- Here is a label for example -->
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-plus"></i>
+                    </button>
+        </div>
+        <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <p>{{weeklyverse.verse}}</p>
+        <p>{{weeklyverse.reference}}</p>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer text-right">
+        <div class="btn text-default pull-left">
+            <a href="{% url 'weeklyverse_edit' weeklyverse.id %}">
+                <i class="fa fa-pencil"></i> Edit
+            </a>
+        </div>
+
+        <div class="pull-right">
+            <a class="btn text-danger" href="{% url 'weeklyverse_delete' weeklyverse.id %}">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+    <!-- box-footer -->
+</div>
+{% endfor %} {% if is_paginated %}
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+            {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+            </li>
+            {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %} {% endfor %} {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %} {% endblock %} {% block footer_includes %}{% endblock %}

@@ -1,0 +1,173 @@
+.btn-xs {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: normal;
+    letter-spacing: normal;
+    border-radius: 0;
+    padding: 1px 5px;
+}
+.btn-light {
+    color: #cccccc;
+}
+.h1, h1 {
+    margin-bottom: 54px;
+}
+.section-end {
+    margin-bottom: 70px;
+}
+.btn-default, .btn-default {
+    background-color: #D07373;
+    border: 1px solid #D07373;
+    color: white;
+}
+.xbtn-default:hover, xbtn-default:focus {
+    background-color: white;
+    border: 1px solid #0085a1;
+    color: #0085a1;
+}
+.rsvp, .rsvp-going, .rsvp-interested, .rsvp-notgoing {
+    color: #5d5d5d;
+    margin: 0 0 5px 0px;
+}
+.rsvp {
+    background-color: #d7d7d7;
+    border: 1px solid #d7d7d7;
+}
+.rsvp-going {
+    color: white;
+    background-color: #5cb85c;
+    border: 1px solid #4cae4c;
+}
+.rsvp-interested {
+    color: white;
+    background-color: #337ab7;
+    border: 1px solid #2e6da4;
+}
+.rsvp-notgoing {
+    color: white;
+    background-color: #d6a1a1;
+    border: 1px solid #b98d8d;
+}
+.churchwide {
+    background-color: red;
+    border: 1px solid red;
+    color: white;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    width: 50%;
+}
+p.welcome-text {
+    color: #BFBFBF;
+    text-align: justify;
+    text-justify: auto;
+}
+.intro-header {
+    background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1449057528837-7ca097b3520c?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=b31792a51e52080f684a4380a3536e24");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+/*
+Note: It is best to use a less version of this file ( see http://css2less.cc
+For the media queries use @screen-sm-min instead of 768px.
+For .omb_spanOr use @body-bg instead of white.
+*/
+
+@media (min-width: 768px) {
+    .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+        margin-left: 25%;
+    }
+}
+.omb_login .omb_authTitle {
+    text-align: center;
+    line-height: 300%;
+    margin-bottom: 0px;
+}
+.omb_login .omb_authTitle a {
+    text-decoration: underline;
+}
+.omb_login .omb_socialButtons a {
+    color: white; // In yourUse @body-bg
+    opacity: 0.9;
+}
+.omb_login .omb_socialButtons a:hover {
+    color: white;
+    opacity: 1;
+}
+.omb_login .omb_socialButtons .omb_btn-facebook {
+    background: #3b5998;
+}
+.omb_login .omb_socialButtons .omb_btn-twitter {
+    background: #00aced;
+}
+.omb_login .omb_socialButtons .omb_btn-google {
+    background: #c32f10;
+}
+.omb_login .omb_loginOr {
+    position: relative;
+    font-size: 1.5em;
+    color: #aaa;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+.omb_login .omb_loginOr .omb_hrOr {
+    background-color: #cdcdcd;
+    height: 1px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+.omb_login .omb_loginOr .omb_spanOr {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -0.6em;
+    margin-left: -1.5em;
+    background-color: white;
+    width: 3em;
+    text-align: center;
+}
+.omb_login .omb_loginForm .input-group.i {
+    width: 2em;
+}
+.omb_login .omb_loginForm .help-block {
+    color: red;
+}
+.omb_login {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+h2.post-title {
+    font-size: 36px;
+}
+h3.post-subtitle {
+    font-weight: 300;
+}
+#logo {
+    background: url(/static/newswire/img/gbm_logo_2016.png) no-repeat;
+    background-size: 20px 20px;
+    background-position: 9px 16px;
+    height: 50px;
+}
+a.navbar-brand {
+    margin-left: 20px;
+}
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+        margin-top: 10px;
+    }
+    #logo {
+        background: url(/static/newswire/img/gbm_logo_2016.png) no-repeat;
+        background-size: 20px 20px;
+        background-position: 9px 20px;
+        height: 50px;
+    }
+    .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+        margin-left: 15px;
+    }
+}

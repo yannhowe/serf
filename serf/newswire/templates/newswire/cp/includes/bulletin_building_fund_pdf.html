@@ -1,0 +1,23 @@
+{% load staticfiles %}
+{% load humanize %}
+<div class="post-preview">
+    <p>
+        <strong>
+            {{ building_fund_collection_latest.date|date:"o" }}
+            Building Fund{% if building_fund_year_goal %}
+                Progress{% endif %}:
+        </strong>
+    </p>
+    <p class="small">Giving through
+        {{ building_fund_collection_latest.date|date:"j M, o" }}
+        was
+        <strong>${{building_fund_collection_ytd|default_if_none:'0'|floatformat:"0"|intcomma}}</strong>
+        .
+        {% if building_fund_year_goal %}We'll need to receive
+            <strong>${{building_goal_and_ytd_collection_difference|default_if_none:'0'|floatformat:"0"|intcomma}}</strong>
+            by the end of the year to meet our building fund goal of
+            <strong>${{building_fund_year_goal|default_if_none:'0'|floatformat:"0"|intcomma}}</strong>
+            this year.
+        {% endif %}
+    </p>
+</div>

@@ -1,0 +1,137 @@
+{% extends "newswire/cp/__base.html" %} {% block header_title %}Announcements - Grace Baptist Ministries{% endblock %} {% block content_header %}Announcements{% endblock %} {% block content_sub_header %}
+<a style="margin-top: -0.8em;" href="{% url 'announcement_new' %}" type="button" class="btn btn-xs btn-primary">
+    <i class="fa fa-plus"></i> Create New</a>
+{% endblock %} {% block header_includes %}{% endblock %} {% block content %}
+<p>Announcements added here display in the bulletin online as well as in the pdf version.</p>
+
+{% for announcement in page_obj %}
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title {% if not announcement.is_published or announcement.hidden or announcement.under_review %}text-muted{% endif %}">
+                    <div style="margin: -0.1em 0.2em 0 -0.2em;" class="btn-toolbar pull-left">
+                        {% if announcement.is_published and not announcement.hidden and not announcement.under_review %}
+                            <button type="button" class="btn btn-xs btn-success pull-left">
+                                Live</button>
+                        {% endif %}
+                        {% if announcement.hidden %}
+                            <button type="button" class="btn btn-xs btn-warning pull-left">
+                                Hidden</button>
+                        {% endif %}
+                        {% if announcement.under_review %}
+                            <button type="button" class="btn btn-xs btn-warning pull-left">
+                                Under Review</button>
+                        {% endif %}
+                    </div>
+                    <strong>{{ announcement.title }}&nbsp;
+                    </strong>
+                </h3>
+        <!-- Buttons, labels, and many other things can be placed here! -->
+        <!-- Here is a label for example -->
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div>
+        <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body {% if not announcement.is_published or announcement.hidden %}text-muted{% endif %}">
+        <p>
+            {{ announcement.body }}
+        </p>
+        <p>
+            <strong>Display Dates:</strong> {{ announcement.publish_start_date }} to {{ announcement.publish_end_date }}<br/>
+            <strong>Submitter:</strong> {{ announcement.submitter }}<br/>
+            <strong>Announcement Audience:</strong> {{ announcement.category }}<br/>
+            <strong>Approver:</strong> {{ announcement.approver }}
+        </p>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <div class="pull-left">
+            <a class="btn text-default pull-right" href="{% url 'announcement_edit' announcement.id %}">
+                <i class="fa fa-pencil"></i> Edit
+            </a>
+        </div>
+        <div class="pull-right">
+            <a class="btn text-danger pull-right" href="{% url 'announcement_delete' announcement.id %}">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+    <!-- box-footer -->
+</div>
+{% endfor %} {% if is_paginated %}
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+            {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+            </li>
+            {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %} {% endfor %} {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+
+<div class="box box-default collapsed-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+                Announcement Audience
+            </h3>
+        <!-- Buttons, labels, and many other things can be placed here! -->
+        <!-- Here is a label for example -->
+        <div class="box-tools pull-right">
+
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-plus"></i>
+                </button>
+        </div>
+        <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <p>
+            <a href="{% url 'category_new' %}" type="button" class="btn btn-xs btn-primary">
+                <i class="fa fa-plus"></i> Create New</a>
+        </p>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Name/Color</th>
+                    <th>Description</th>
+                </tr>
+                {% for category in categories %}
+                <tr>
+                    <td>
+                        <span style="background-color: {{ category.color }}; width: 100%;" class="badge">{{ category.name }}</span>
+                    </td>
+                    <td>{{ category.description }}
+                        <div class="btn-group pull-right">
+                            <a class="btn btn-xs" href="{% url 'category_edit' category.id %}">
+                                <i class="fa fa-pencil"></i> Edit
+                            </a>
+                            <a class="btn btn-xs text-danger" href="{% url 'category_delete' category.id %}">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer text-right"></div>
+    <!-- box-footer -->
+</div>
+
+{% endblock %} {% block footer_includes %}{% endblock %}

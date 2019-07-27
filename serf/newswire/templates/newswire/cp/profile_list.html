@@ -1,0 +1,120 @@
+{% extends "newswire/cp/__base.html" %}
+{% load staticfiles %}
+{% block header_title %}People Summary - Grace Baptist Ministries{% endblock %}
+{% block content_header %}People Summary{% endblock %}
+{% block header_includes %}
+    <link rel="stylesheet" href="{% static 'newswire/cp/plugins/datatables/jquery.dataTables.min.css' %}">
+{% endblock %}
+{% block content_sub_header %}
+    <a style="margin-top: -0.8em;" href="{% url 'profile_new' %}" type="button" class="btn btn-xs btn-primary">
+        <i class="fa fa-plus"></i>
+        Create New</a>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Member List</h3>
+                </div>
+                <div class="box-body">
+                    <table id="memberlist" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>E-Mail</th>
+                                <th>Preferred Name</th>
+                                <th>Maiden Name</th>
+                                <th>Gender</th>
+                                <th>date_of_birth</th>
+                                <th>date_of_marriage</th>
+                                <th>date_of_baptism</th>
+                                <th>date_of_death</th>
+                                <th>mobile_number</th>
+                                <th>home_number</th>
+                                <th>address_block</th>
+                                <th>address_street</th>
+                                <th>address_unit</th>
+                                <th>country</th>
+                                <th>postal_code</th>
+                                <th>is_regular</th>
+                                <th>is_member</th>
+                                <th>Attached to username</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for profile in object_list %}
+                                <tr>
+                                    <td class="text-center">
+                                        {{ profile.id }}
+                                        <a href="{%  url 'profile_edit' profile.id  %}">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a href="{%  url 'profile_delete' profile.id  %}">
+                                            <i class="text-danger fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <strong>{{ profile.last_name }}</strong>
+                                        {{ profile.first_name }}</td>
+                                    <td>{{ profile.email }}</td>
+                                    <td>{{ profile.prefered_name }}</td>
+                                    <td>{{ profile.maiden_name }}</td>
+                                    <td>{{ profile.gender }}</td>
+                                    <td>{{ profile.date_of_birth }}</td>
+                                    <td>{{ profile.date_of_marriage }}</td>
+                                    <td>{{ profile.date_of_baptism }}</td>
+                                    <td>{{ profile.date_of_death }}</td>
+                                    <td>{{ profile.mobile_number }}</td>
+                                    <td>{{ profile.home_number }}</td>
+                                    <td>{{ profile.address_block }}</td>
+                                    <td>{{ profile.address_street }}</td>
+                                    <td>{{ profile.address_unit }}</td>
+                                    <td>{{ profile.country }}</td>
+                                    <td>{{ profile.postal_code }}</td>
+                                    <td>{{ profile.is_regular }}</td>
+                                    <td>{{ profile.is_member }}</td>
+                                    <td>{{ profile.user.username }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>E-Mail</th>
+                                <th>Preferred Name</th>
+                                <th>Maiden Name</th>
+                                <th>Gender</th>
+                                <th>date_of_birth</th>
+                                <th>date_of_marriage</th>
+                                <th>date_of_baptism</th>
+                                <th>date_of_death</th>
+                                <th>mobile_number</th>
+                                <th>home_number</th>
+                                <th>address_block</th>
+                                <th>address_street</th>
+                                <th>address_unit</th>
+                                <th>country</th>
+                                <th>postal_code</th>
+                                <th>is_regular</th>
+                                <th>is_member</th>
+                                <th>Attached to User</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer_includes %}
+    <script>
+        $(document).ready(function() {
+            $('#memberlist').DataTable({"paging": false, "scrollX": true});
+        });
+    </script>
+    <script src="{% static 'newswire/cp/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+{% endblock %}

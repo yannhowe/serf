@@ -1,0 +1,26 @@
+{% extends 'newswire/__base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+
+{% block title %}404 - This Page Doesn't Exist{% endblock %}
+
+{% block hero %}
+    <header>
+        <div class="inner text-center">
+            <h2>404 Page not found</h2>
+            <p>We can't find what you're looking for..</p>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div>
+      <h2>Need help?</h2>
+        <p class="text-justified">Perhaps you are looking for the
+            <a href="{% url 'home' %}">bulletin</a>
+            or the
+            <a href="/">home page</a>.
+        </p>
+    </div>
+{% endblock %}

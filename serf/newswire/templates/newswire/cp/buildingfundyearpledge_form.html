@@ -1,0 +1,36 @@
+{% extends "newswire/cp/__base.html" %}
+{% load crispy_forms_tags %}
+{% block header_title %}Building Fund Pledge - Grace Baptist Ministries{% endblock %}
+{% block content_header %}Building Fund Pledge{% endblock %}
+{% block content_sub_header %}{% endblock %}
+
+{% block header_includes %}{% endblock %}
+
+{% block content %}
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">
+        <strong>Building Fund Pledge</strong>
+      </a>
+    </h3>
+    <div class="box-tools pull-right">
+    </div>
+    <!-- /.box-tools -->
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    {% crispy form %}
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer"></div>
+  <!-- box-footer -->
+</div>
+{% endblock %}
+
+{% block footer_includes %}
+<script>
+  $(document).ready(function() {
+    $('.dateinput').datepicker({format: "yyyy-mm-dd"});
+  });
+</script>
+{% endblock %}

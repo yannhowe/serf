@@ -1,0 +1,54 @@
+version: '2'
+
+volumes:
+  serf-static:
+  hugo:
+
+services:
+
+  nginx:
+    restart: always
+    build: ./nginx
+    depends_on:
+      - hugo
+      - serf
+      - serf-static
+    volumes:
+      - hugo:/var/www/
+      - serf-static:/usr/src/app/static
+    links:
+      - serf:serf
+    ports:
+      - "80:80"
+
+  hugo:
+    build: ./hugo
+    command: >
+             -v
+             --destination="/var/www/"
+    volumes:
+      - hugo:/var/www/
+
+  serf:
+    restart: always
+    build: ./serf
+    depends_on:
+      - serf-static
+    volumes:
+      # Production
+      # - /usr/src/app
+      # Development
+      - ./serf/:/usr/src/app
+      - serf-static:/usr/src/app/static
+    expose:
+      - "8000"
+    env_file: .env
+#    command: python /usr/src/app/manage.py runserver
+    command: /usr/local/bin/gunicorn serf.wsgi:application -w 2 -b :8000 --chdir /usr/src/app
+
+  serf-static:
+    build: ./serf
+    volumes:
+      - serf-static:/usr/src/app/static
+    env_file: .env
+    command: python /usr/src/app/manage.py collectstatic --noinput

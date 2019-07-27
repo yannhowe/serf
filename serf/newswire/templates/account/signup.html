@@ -1,0 +1,40 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %} - {% endblock %}
+
+{% block hero %}
+  <header>
+    <div class="inner text-center">
+      <h2>{% trans "Signup" %}</h2>
+      <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+  </div>
+  </header>
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="omb_login">
+    <div class="row omb_row-sm-offset-3 omb_socialButtons">
+        <div class="col-xs-12 col-sm-6">
+            <h2 class="text-center">Sign up using your email address:</h2>
+            <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <button type="submit">{% trans "Sign Up" %}
+                    &raquo;</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block title %}Your Profile - {% endblock %}
+
+{% block hero %}
+    <header>
+      <div class="inner text-center">
+        <h2>Your Profile</h2>
+        <p>Verify your details</p>
+      </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+  <div id="profile-details" class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+      <table class="table">
+        <colgroup>
+          <col class="col-xs-6">
+          <col class="col-xs-6">
+        </colgroup>
+        <tbody>
+          <tr>
+            <th class="text-right" scope="row">Full Name:</th>
+            <td><u>{{ profile.last_name }}</u> {{ profile.first_name }}</td>
+          </tr>
+          <tr>
+            <th class="text-right" scope="row">Preferred Name:</th>
+            <td>{{ profile.prefered_name }}</td>
+          </tr>
+          {% if not profile.gender == "m" %}
+          <tr>
+            <th class="text-right" scope="row">Maiden Name:</th>
+            <td>{{ profile.maiden_name }}</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <th class="text-right" scope="row">Gender:</th>
+            <td>{{ profile.gender }}</td>
+          </tr>
+          <tr>
+            <th class="text-right" scope="row">Date of Birth:</th>
+            <td>{{ profile.date_of_birth }}</td>
+          </tr>
+          <tr>
+            <th class="text-right" scope="row">Date of Marriage:</th>
+            <td>{{ profile.date_of_marriage }}</td>
+          </tr>
+          <tr>
+            <th class="text-right" scope="row">Baptism Date:</th>
+            <td>{{ profile.date_of_baptism }}</td>
+          </tr>
+          <tr>
+            <th class="text-right" scope="row">Mobile Number:</th>
+            <td><a href="tel:{{ profile.mobile_number }}">{{ profile.mobile_number }}</a></td>
+          </tr>
+          <tr>
+            <th class="text-right" scope="row">Home Number:</th>
+            <td><a href="tel:{{ profile.home_number }}">{{ profile.home_number }}</a></td>
+          </tr>
+          <tr>
+            <th class="text-right" scope="row">Address:</th>
+            <td>
+              {% if profile.address_block %}{{ profile.address_block }} {% endif %}{% if profile.address_street %}{{ profile.address_street }}{% endif %}<br />
+              {% if profile.address_unit %}{{ profile.address_unit }}<br />{% endif %}
+              {%if profile.country %}{{ profile.country }} {% endif %}{% if profile.postal_code %}{{ profile.postal_code }}{% endif %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="{% url 'home' %}" class="button special" role="button">Looks Good</a>
+      <a href="{% url 'profile_front_end_update' %}" class="btn btn-secondary" role="button">Edit</a>
+      <br />
+      <br />
+      <p>
+        <small>*We use this information to send you important updates, keep up with changes in our membership as well as provide basic functionality on this website.</small>
+      </p>
+    </div>
+  </div>
+{% endblock %}

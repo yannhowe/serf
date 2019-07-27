@@ -1,0 +1,12 @@
+<p class="text-justify">
+    {% regroup birthdays_after_coming_sunday by date_of_birth as birthdays_by_date %}
+    {% for date in birthdays_by_date %}
+        <strong>{{ date.grouper|date:"j/m" }}:</strong>
+        {% for person in date.list %}
+            {{ person.last_name }}
+            {{ person.first_name }}
+            {% if forloop.last %}
+            {% else %}&bull;{% endif %}
+        {% endfor %}
+    {% endfor %}
+</p>

@@ -1,0 +1,132 @@
+{% extends "newswire/cp/__base.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% block header_title %}Attendance - Grace Baptist Ministries{% endblock %}
+{% block content_header %}Attendance{% endblock %}
+{% block header_includes %}
+    <link rel="stylesheet" href="{% static 'newswire/cp/plugins/datatables/jquery.dataTables.min.css' %}">
+{% endblock %}
+{% block content_sub_header %}
+    <a style="margin-top: -0.8em;" href="{% url 'groupattendance_new' %}" type="button" class="btn btn-xs btn-primary">
+        <i class="fa fa-plus"></i>
+        Create New</a>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Individual Attendance Records</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th style="width: 10px">Group</th>
+                                <th>Person</th>
+                                <th>Date</th>
+                                <th style="width: 40px">Attendance</th>
+                            </tr>
+                            {% for attendance in object_list %}
+                                <tr>
+                                    <td>{{ attendance.group.name }}</td>
+                                    <td>{{ attendance.person }}</td>
+                                    <td>{{ attendance.date }}</td>
+                                    <td>{{ attendance.get_attendance_display }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Groups</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th style="width: 10px">Group</th>
+                                <th>Leader</th>
+                                <th>Date</th>
+                                <th style="width: 40px">Attendance</th>
+                            </tr>
+                            <tr>
+                                <td>1.</td>
+                                <td>Soh Beng Yong
+                                    <button type="button" class="btn btn-primary btn-xs">
+                                        <i class="fa fa-plus"></i>
+                                        Attendance</button>
+                                </td>
+                                <td>
+                                    <span id="compositeline">
+                                        <canvas width="63" height="18" style="display: inline-block; width: 63px; height: 18px; vertical-align: top;"></canvas>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-red">55%</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>2.</td>
+                                <td>Clean database</td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-yellow">70%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3.</td>
+                                <td>Cron job running</td>
+                                <td>
+                                    <div class="progress progress-xs progress-striped active">
+                                        <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light-blue">30%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4.</td>
+                                <td>Fix and squish bugs</td>
+                                <td>
+                                    <div class="progress progress-xs progress-striped active">
+                                        <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-green">90%</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_includes %}
+<script>
+    $(document).ready(function() {
+        $('#memberlist').DataTable({
+            "paging": true,
+            "scrollX": true,
+            "order": [3, 'desc']
+        });
+    });
+</script>
+<script src="{% static 'newswire/cp/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+{% endblock %}

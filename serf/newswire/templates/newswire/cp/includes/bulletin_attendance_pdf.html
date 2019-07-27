@@ -1,0 +1,22 @@
+{% load staticfiles %}
+{% load humanize %}
+<div class="post-preview">
+    {% for attendance in latest_sunday_attendance %}
+        <p>
+            <strong>
+                Attendance ({{attendance.date|date:"d/m/o"}}):
+            </strong>
+        </p>
+        English Service:
+        <strong>{{attendance.english_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}</strong>
+        &bull; Chinese Service:
+        <strong>{{attendance.chinese_congregation|default_if_none:"0"|floatformat:"0"|intcomma}}</strong>
+        &bull; Children's Church:
+        <strong>{{attendance.childrens_church|default_if_none:"0"|floatformat:"0"|intcomma}}</strong>
+        &bull; Preschoolers:
+        <strong>{{attendance.preschoolers|default_if_none:"0"|floatformat:"0"|intcomma}}</strong>
+        &bull; Nursery:
+        <strong>{{attendance.nursery|default_if_none:"0"|floatformat:"0"|intcomma}}</strong>
+    </p>
+{% endfor %}
+</div>

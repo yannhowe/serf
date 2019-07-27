@@ -1,0 +1,7 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}
+
+{% autoescape off %}Hello,
+
+Thanks for signing up at the GBM Bulletin. To verify your email address for your account, go to {{ activate_url }}.
+{% endautoescape %}
+Thanks!!

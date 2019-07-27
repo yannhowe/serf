@@ -1,0 +1,42 @@
+{% extends "newswire/cp/__base.html" %}
+{% load crispy_forms_tags %}
+{% block header_title %}{{page.title}}
+    - Grace Baptist Ministries{% endblock %}
+{% block content_header %}{{page.header}}{% endblock %}
+{% block content_sub_header %}{{page.description}}{% endblock %}
+
+{% block header_includes %}
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <strong>{{page.header}}</strong>
+            </h3>
+            <div class="box-tools pull-right">
+                <!-- Buttons, labels, and many other things can be placed here! -->
+                <!-- Here is a label for example -->
+                <span class="label label-primary">{{ object.date }}</span>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            {% crispy form %}
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer"></div>
+        <!-- box-footer -->
+    </div>
+{% endblock %}
+
+{% block footer_includes %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.dateinput').datepicker({format: "yyyy-mm-dd"});
+            $('.timeinput').timepicker({template: false, showInputs: false, showMeridian: false, minuteStep: 15});
+        });
+    </script>
+{% endblock %}

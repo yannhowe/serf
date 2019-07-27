@@ -1,0 +1,81 @@
+{% extends "newswire/cp/__base.html" %}
+{% block header_title %}Announcement Audience Categories - Grace Baptist Ministries{% endblock %}
+{% block content_header %}Announcement Audience Categories{% endblock %}
+{% block content_sub_header %}
+  <a style="margin-top: -0.8em;" href="{% url 'category_new' %}" type="button" class="btn btn-xs btn-primary">
+    <i class="fa fa-plus"></i>
+    Create New</a>
+{% endblock %}
+
+{% block header_includes %}{% endblock %}
+
+{% block content %}
+  <div class="box box-default collapsed-box">
+    <div class="box-header with-border">
+      <h3 class="box-title">How this works</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+      <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body" style="display: none;">
+      This page allows you to add new categories to accnouncements. When you assign an announcement to an audience category, the announcement audience category will show on the top right along with the background color selected here
+    </div>
+    <!-- /.box-body -->
+  </div>
+
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">
+        Announcement Categories
+      </h3>
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      <div class="box-tools pull-right">
+
+        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-minus"></i>
+        </button>
+      </div>
+      <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Name/Color</th>
+            <th>Description</th>
+          </tr>
+          {% for category in object_list %}
+            <tr>
+              <td>
+                <span style="background-color: {{ category.color }}; width: 100%;" class="badge">{{ category.name }}</span>
+              </td>
+              <td>{{ category.description }}
+                <div class="btn-group pull-right">
+                  <a class="btn btn-xs" href="{% url 'category_edit' category.id %}">
+                    <i class="fa fa-pencil"></i>
+                    Edit
+                  </a>
+                  <a class="btn btn-xs text-danger" href="{% url 'category_delete' category.id %}">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                  </a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer text-right"></div>
+    <!-- box-footer -->
+  </div>
+{% endblock %}
+
+{% block footer_includes %}{% endblock %}
