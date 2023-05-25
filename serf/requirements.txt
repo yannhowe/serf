@@ -32,7 +32,7 @@ Pyphen==0.9.5
 python3-openid==3.1.0
 pytz==2019.1
 PyYAML==5.1.1
-requests==2.22.0
+requests==2.31.0
 requests-oauthlib==1.2.0
 six==1.12.0
 sqlparse==0.3.0
