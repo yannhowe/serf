@@ -1,4 +1,4 @@
-FROM alpine:3.2
+FROM alpine:3.16.7
 
 ENV HUGO_VERSION 0.15
 
